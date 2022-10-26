@@ -1,0 +1,5 @@
+Scaffold-DbContext "Server=PC-232-07\SQLEXPRESS; Database=WSR.02.Kukhar; Trusted_Connection=True;" 
+Microsoft.EntityFrameworkCore.SqlServer 
+-OutPutDir "Domain/Entities" 
+-ContextDir "Infrastructure/Persistence" 
+-Context "ApplicationDbContext"
