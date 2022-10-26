@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:Kuhar.Lopushok.Presentation"
              StartupUri="Presentation/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="ColorPrimary">#CFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="ColorSecondary">#CEFFF9</SolidColorBrush>
+            <SolidColorBrush x:Key="ColorAccent">#00CC76</SolidColorBrush>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

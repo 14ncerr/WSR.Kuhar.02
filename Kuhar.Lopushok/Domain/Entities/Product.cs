@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Kuhar.Lopushok.Domain.Entities
 {
@@ -12,12 +13,21 @@ namespace Kuhar.Lopushok.Domain.Entities
             ProductSales = new HashSet<ProductSale>();
         }
 
+        public string? _image;
+
         public int Id { get; set; }
         public string Title { get; set; } = null!;
         public int? ProductTypeId { get; set; }
         public string ArticleNumber { get; set; } = null!;
         public string? Description { get; set; }
-        public string? Image { get; set; }
+        public string? Image 
+        {
+            get => (_image == string.Empty) || (_image == null)
+                ? $"..\\Resources\\picture.png"
+                : $"..\\Resources{_image}";
+
+            set => _image = value;
+        }
         public int? ProductionPersonCount { get; set; }
         public int? ProductionWorkshopNumber { get; set; }
         public decimal MinCostForAgent { get; set; }
