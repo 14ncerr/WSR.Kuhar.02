@@ -19,6 +19,8 @@ namespace Kuhar.Lopushok.Presentation.ViewModels
             {
                 Products = context.Products
                     .Include(t => t.ProductType)
+                    .Include(pb => pb.ProductMaterials)
+                    .ThenInclude(m => m.Material)
                     .ToList();
             }
         }

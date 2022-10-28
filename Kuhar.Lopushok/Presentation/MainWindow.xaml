@@ -6,9 +6,10 @@
         xmlns:vm="clr-namespace:Kuhar.Lopushok.Presentation.ViewModels"
         xmlns:local="clr-namespace:Kuhar.Lopushok.Presentation"
         mc:Ignorable="d"       
-        Title="MainWindow" 
+        Title="Lopushok" 
         Height="550" 
-        Width="800">
+        Width="800"
+        Icon="/Resources/icon.ico">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -103,20 +104,22 @@
 				Grid.Column="1"
                 ItemsSource="{Binding Products}"    
 				Background="Transparent"
+                HorizontalContentAlignment="Stretch"
                 Margin="0 8 0 0">
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewItem">
-                                    <Border
-                                        BorderBrush="Black"
-                                        BorderThickness="1"
-                                        MinHeight="120"
-                                        Margin="0 0 0 17"
-                                        Background="{StaticResource ColorSecondary}"
-                                        Opacity=".8">
+                <ListView.ItemTemplate>
+                        <DataTemplate>
+                            
+                             <Border
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                MinHeight="120"
+                                Margin="0 0 0 8"
+                                Background="{StaticResource ColorSecondary}"
+                                Opacity=".8"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                VerticalAlignment="Center">
 
                                         <Grid>
 
@@ -129,7 +132,7 @@
                                             <Image
                                                 Grid.Column="0"
                                                 Source="{Binding Image}"
-                                                Height="80"
+                                                Width="84"
                                                 Margin="4"/>
 
                                             <StackPanel
@@ -162,26 +165,27 @@
                                                     Margin="0 0 0 4"/>
 
                                                 <TextBlock
-                                                    Text="Материалы: "
+                                                    Text="{Binding MaterialStringRepresentation}"
                                                     FontFamily="Calibri"
+                                                    TextWrapping="WrapWithOverflow"
+                                                    Width="470"
                                                     FontSize="16"/>
                                             </StackPanel>
 
                                             <TextBlock
                                                 Grid.Column="2"
-                                                Text="Стоимость"
+                                                Text="{Binding TotalCost}"
                                                 FontFamily="Calibri"
                                                 FontSize="16"
                                                 Margin="8"/>
                                             
                                         </Grid>
                                     </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                    
-                </ListView.ItemContainerStyle>
+                              
+                          
+                            
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 
             </ListView>
 

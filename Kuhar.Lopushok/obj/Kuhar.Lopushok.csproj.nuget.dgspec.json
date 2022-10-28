@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\19\\Kukhar\\Kuhar.Lopushok\\Kuhar.Lopushok\\Kuhar.Lopushok.csproj": {}
+    "D:\\19\\Kuhar\\WSR.Kuhar.WPF\\Kuhar.Lopushok\\Kuhar.Lopushok.csproj": {}
   },
   "projects": {
-    "D:\\19\\Kukhar\\Kuhar.Lopushok\\Kuhar.Lopushok\\Kuhar.Lopushok.csproj": {
+    "D:\\19\\Kuhar\\WSR.Kuhar.WPF\\Kuhar.Lopushok\\Kuhar.Lopushok.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\19\\Kukhar\\Kuhar.Lopushok\\Kuhar.Lopushok\\Kuhar.Lopushok.csproj",
+        "projectUniqueName": "D:\\19\\Kuhar\\WSR.Kuhar.WPF\\Kuhar.Lopushok\\Kuhar.Lopushok.csproj",
         "projectName": "Kuhar.Lopushok",
-        "projectPath": "D:\\19\\Kukhar\\Kuhar.Lopushok\\Kuhar.Lopushok\\Kuhar.Lopushok.csproj",
+        "projectPath": "D:\\19\\Kuhar\\WSR.Kuhar.WPF\\Kuhar.Lopushok\\Kuhar.Lopushok.csproj",
         "packagesPath": "C:\\Users\\student\\.nuget\\packages\\",
-        "outputPath": "D:\\19\\Kukhar\\Kuhar.Lopushok\\Kuhar.Lopushok\\obj\\",
+        "outputPath": "D:\\19\\Kuhar\\WSR.Kuhar.WPF\\Kuhar.Lopushok\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
