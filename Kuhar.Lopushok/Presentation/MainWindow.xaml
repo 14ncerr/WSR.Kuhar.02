@@ -74,7 +74,8 @@
 				Grid.Row="1"
 				Grid.Column="5"
                 ItemsSource="{Binding SortingItemsList}"
-                SelectedItem="{Binding SelectedSortingItem}"
+                SelectedItem="{Binding SelectedSortingItem, 
+                UpdateSourceTrigger=PropertyChanged}"
 				VerticalAlignment="Stretch"
 				HorizontalAlignment="Stretch"
 				Background="#CEFFF9"
@@ -183,6 +184,7 @@
                                                     Text="{Binding MaterialStringRepresentation}"
                                                     FontFamily="Calibri"
                                                     TextWrapping="WrapWithOverflow"
+                                                    HorizontalAlignment="Left"
                                                     Width="470"
                                                     FontSize="16"/>
                                             </StackPanel>
