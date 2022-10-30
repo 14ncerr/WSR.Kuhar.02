@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 D:\CL\1113\DotNetProjects\WSR\WSR.Kuhar.WPF\Kuhar.Lopushok\App.xaml
-2-479052957
+22067350773
 
-22-1216721788
+23-2031880231
 2141467740576
-Presentation\MainWindow.xaml;Presentation\ProductWindow.xaml;
+Presentation\AddNewProductWindow.xaml;Presentation\MainWindow.xaml;
 
-True
+False
 

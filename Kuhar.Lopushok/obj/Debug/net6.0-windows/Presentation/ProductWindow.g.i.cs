@@ -53,7 +53,7 @@ namespace Kuhar.Lopushok.Presentation {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Kuhar.Lopushok;V1.0.0.0;component/presentation/productwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Kuhar.Lopushok;component/presentation/productwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Presentation\ProductWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
