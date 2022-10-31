@@ -1,12 +1,8 @@
 ﻿using Kuhar.Lopushok.Domain.Entities;
 using Kuhar.Lopushok.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Kuhar.Lopushok.Presentation.ViewModels
 {
@@ -14,13 +10,14 @@ namespace Kuhar.Lopushok.Presentation.ViewModels
     {
         #region Fields
 
-        private List<Product> _products = new();
-        private List<Product> _displayingProducts;      
-        private List<string> _sortingItemsList = new();
-        private List<string> _filteringItemsList = new();
-        private string _selectedSortingItem = null!;
-        private string _selectedFilteringItem = null!;
-        public string _searchingString = "";
+        private List<Product> _products;
+        private List<Product> _displayingProducts;   
+        
+        private List<string> _filteringItemsList;
+
+        private string _sortValue;
+        private string _filterValue;
+        public string _searchingString;
 
         #endregion
 
@@ -29,54 +26,44 @@ namespace Kuhar.Lopushok.Presentation.ViewModels
         public List<Product> Products
         {
             get => _products;
-            set
-            {
-                _products = value;
-                OnPropertyChanged(nameof(Products));
-            }
+            set => _products = value;
+            
         }
 
         public List<Product> DisplayingProducts
         {
-            get => _displayingProducts; 
-            set
-            {
-                _displayingProducts = value;
-                OnPropertyChanged(nameof(DisplayingProducts));
-            } 
+            get => _displayingProducts;
+            set => Set(ref _displayingProducts, value, nameof(DisplayingProducts));
         }
 
-        public List<string> SortingItemsList
+        public List<string> SortingItemsList => new List<string>
         {
-            get => _sortingItemsList;
-            set => _sortingItemsList = value;
-
-        }
+            "Без сортировки", "По названию (возр)", "По названию (уб)", "По цене (возр)", "По цене (уб)"
+        };
 
         public List<string> FilteringItemsList
         {
             get => _filteringItemsList;
-            set => _filteringItemsList = value;
+            set => Set(ref _filteringItemsList, value, nameof(FilteringItemsList));
         }
 
-        public string SelectedSortingItem
+        public string SortValue
         {
-            get => _selectedSortingItem;
+            get => _sortValue;
             set
             {
-                _selectedSortingItem = value;
-                OnPropertyChanged(nameof(SelectedSortingItem));             
+                Set(ref _sortValue, value, nameof(SortValue));
+                DisplayProducts();
             }
         }
 
-        public string SelectedFilteringItem
+        public string FilterValue
         {
-            get => _selectedFilteringItem;
+            get => _filterValue;
             set
             {
-                _selectedFilteringItem = value;
-                Products = FiltProducts(GetProducts());
-                OnPropertyChanged(nameof(SelectedFilteringItem));
+                Set(ref _filterValue, value, nameof(FilterValue));
+                DisplayProducts();
             }
         }
 
@@ -85,9 +72,8 @@ namespace Kuhar.Lopushok.Presentation.ViewModels
             get => _searchingString;
             set
             {
-                _searchingString = value;
-                Products = Searching(GetProducts());
-                OnPropertyChanged(nameof(SearchingString));           
+                Set(ref _searchingString, value, nameof(SearchingString));
+                DisplayProducts();
             }
         }
 
@@ -95,78 +81,70 @@ namespace Kuhar.Lopushok.Presentation.ViewModels
 
         public MainWindowViewModel()
         {
-            Products = GetProducts();
-            SortingItemsList = GetSortingItems();
-            FilteringItemsList = GetFilteringItems();
-            SelectedSortingItem = "Без сортировки";
-            SelectedFilteringItem = "Без фильтров";
-        }
+            FilteringItemsList = new List<string>();
+            FilteringItemsList.Add("Без фильтра");
 
-        #region GetMethods
-
-        private List<Product> GetProducts()
-        {
-            using (ApplicationDbContext context = new())
-            {
-                var products = context.Products
-                    .Include(pt => pt.ProductType)
-                    .Include(pm => pm.ProductMaterials)
-                    .ThenInclude(m => m.Material)
-                    .ToList();
-
-                return products;
-            }
-        }
-
-        private List<string> GetSortingItems()
-        {
-            List<string> sorters = new();
-            sorters.Add("Без сортировки");
-            sorters.Add("По названию (возр.)");
-            sorters.Add("По названию (убыв.)");
-            sorters.Add("По возрастанию стоимости");
-            sorters.Add("По убыванию стоимости");
-
-            return sorters;
-        }
-
-        private List<string> GetFilteringItems()
-        {
-            var filters = new List<string>();
-            filters.Add("Без фильтров");
+            FilterValue = FilteringItemsList[0];
+            SortValue = SortingItemsList[0];
 
             using (ApplicationDbContext context = new())
             {
                 foreach (var item in context.ProductTypes)
                 {
-                    filters.Add(item.Title);
+                    FilteringItemsList.Add(item.Title);
                 }
+
+                Products = context.Products
+                    .Include(pt => pt.ProductType)
+                    .Include(pm => pm.ProductMaterials)
+                    .ThenInclude(m => m.Material)
+                    .ToList();
             }
-            return filters;
+            _displayingProducts = new List<Product>(_products);
         }
 
-        #endregion
 
         #region Sorting filtering and searching realisation
 
-        private List<Product> Searching(List<Product> incomingProducts)
+        private void DisplayProducts()
         {
-            List<Product> SearchList = new();
-            if (SearchingString == string.Empty || SearchingString == "")
-                return incomingProducts;
-            else
-                return incomingProducts.Where(p => p.Title.ToLower().Contains(SearchingString.ToLower())).ToList();        
+            DisplayingProducts = Sort(Search(Filter(_products)));
+        }
+       
+        private List<Product> Search(List<Product> products)
+        {
+            if ((SearchingString == string.Empty) || (SearchingString == null))
+                return products;
+
+            var value = SearchingString.ToLower();
+
+            return products.Where(p => p.Title.ToLower().Contains(value)).ToList();
         }
 
-        private List<Product> FiltProducts(List<Product> incomingProducts)
+        private List<Product> Filter(List<Product> products)
         {
-            if (SelectedFilteringItem == FilteringItemsList[0])
-                return incomingProducts;
+            if (FilterValue == FilteringItemsList[0])
+                return products;
             else
-                return incomingProducts.Where(p => p.ProductType.Title == SelectedFilteringItem).ToList();
+                return products.Where(p => p.ProductType.Title == FilterValue).ToList();
         }
+
+        private List<Product> Sort(List<Product> products)
+        {
+            if (SortValue == SortingItemsList[1])
+                return products.OrderBy(p => p.Title).ToList();
+            else if (SortValue == SortingItemsList[2])
+                return products.OrderByDescending(p => p.Title).ToList();
+            else if (SortValue == SortingItemsList[3])
+                return products.OrderBy(p => p.TotalCost).ToList();
+            else if (SortValue == SortingItemsList[4])
+                return products.OrderByDescending(p => p.TotalCost).ToList();
+            else
+                return products;
+        }
+    }
         
         #endregion
 
-    }
+    
 }
