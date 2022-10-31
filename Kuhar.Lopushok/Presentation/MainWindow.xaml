@@ -8,7 +8,9 @@
         mc:Ignorable="d"       
         Title="Lopushok" 
         Height="550" 
+        MinHeight="550"
         Width="800"
+        MinWidth="800"
         Icon="/Resources/icon.ico">
 
     <Window.DataContext>
@@ -59,6 +61,8 @@
                 <TextBox
 					Grid.Row="1"
 					Grid.Column="3"
+                    Text="{Binding SearchingString, 
+                    UpdateSourceTrigger=PropertyChanged}"
 					VerticalAlignment="Stretch"
 					HorizontalAlignment="Stretch"
 					Background="{StaticResource ColorSecondary}"
@@ -68,28 +72,33 @@
 					VerticalContentAlignment="Center"/>
 
             <ComboBox
-					Grid.Row="1"
-					Grid.Column="5"
-					VerticalAlignment="Stretch"
-					HorizontalAlignment="Stretch"
-					Background="#CEFFF9"
-					BorderBrush="Black"
-					BorderThickness="1"
-					FontSize="20"
-					VerticalContentAlignment="Center"
-					HorizontalContentAlignment="Left"/>
+				Grid.Row="1"
+				Grid.Column="5"
+                ItemsSource="{Binding SortingItemsList}"
+                SelectedItem="{Binding SortValue, 
+                UpdateSourceTrigger=PropertyChanged}"
+				VerticalAlignment="Stretch"
+				HorizontalAlignment="Stretch"
+				Background="#CEFFF9"
+				BorderBrush="Black"
+				BorderThickness="1"
+				FontSize="14"
+				VerticalContentAlignment="Center"
+				HorizontalContentAlignment="Left"/>
 
             <ComboBox
-					Grid.Row="1"
-					Grid.Column="7"
-					VerticalAlignment="Stretch"
-					HorizontalAlignment="Stretch"
-					Background="#CEFFF9"
-					BorderBrush="Black"
-					BorderThickness="1"
-					FontSize="20"
-					VerticalContentAlignment="Center"
-					HorizontalContentAlignment="Left"/>
+				Grid.Row="1"
+				Grid.Column="7"
+                ItemsSource="{Binding FilteringItemsList}"
+                SelectedItem="{Binding FilterValue}"
+				VerticalAlignment="Stretch"
+				HorizontalAlignment="Stretch"
+				Background="#CEFFF9"
+				BorderBrush="Black"
+				BorderThickness="1"
+				FontSize="14"
+				VerticalContentAlignment="Center"
+				HorizontalContentAlignment="Left"/>
         </Grid>
 
         <Grid
@@ -102,15 +111,24 @@
 
             <ListView
 				Grid.Column="1"
-                ItemsSource="{Binding Products}"    
+                ItemsSource="{Binding DisplayingProducts}"    
 				Background="Transparent"
                 HorizontalContentAlignment="Stretch"
                 Margin="0 8 0 0">
 
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить продукт"/>
+                            <MenuItem Header="Добавить материалы"/>
+                            <MenuItem Header="Изменить продукт"/>
+                            <MenuItem Header="Удалить продукт"/>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                
                 <ListView.ItemTemplate>
                         <DataTemplate>
-                            
-                             <Border
+
+                            <Border
                                 BorderBrush="Black"
                                 BorderThickness="1"
                                 MinHeight="120"
@@ -120,8 +138,7 @@
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                 VerticalAlignment="Center">
-
-                                        <Grid>
+                                <Grid>
 
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -168,6 +185,7 @@
                                                     Text="{Binding MaterialStringRepresentation}"
                                                     FontFamily="Calibri"
                                                     TextWrapping="WrapWithOverflow"
+                                                    HorizontalAlignment="Left"
                                                     Width="470"
                                                     FontSize="16"/>
                                             </StackPanel>

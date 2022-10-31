@@ -11,5 +11,6 @@ namespace Kuhar.Lopushok.Presentation
         {
             InitializeComponent();
         }
+
     }
 }

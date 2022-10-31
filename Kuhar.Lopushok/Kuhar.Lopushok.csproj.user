@@ -7,6 +7,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Presentation\AddNewProductWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Presentation\AddNewProductWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Presentation\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
